@@ -1,0 +1,31 @@
+.gallery-container {
+    padding: 2rem;
+    text-align: center;
+    background: linear-gradient(to right, #ce92da, #5695b9);
+  }
+  
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding: 0 2rem;
+  }
+  
+  .gallery-item {
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .gallery-item img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+
+  .gallery-title {
+    color: rgb(80, 44, 11);
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
