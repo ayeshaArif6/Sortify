@@ -1,0 +1,117 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 97.5vh;
+  background: linear-gradient(to right, #ce92da, #5695b9);
+}
+
+.login-box {
+  background: #ffffffee;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 420px;
+}
+
+.splash-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.splash-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+.splash-header .brand {
+  color: #2563eb;
+}
+
+.splash-header p {
+  font-size: 1rem;
+  color: #374151;
+  margin-top: 0.5rem;
+}
+
+.logo {
+  width: 60px;
+  margin-bottom: 0.5rem;
+}
+
+.login-title {
+  text-align: center;
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  color: #111827;
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+}
+
+button[type="submit"] {
+  width: 100%;
+  background-color: #2563eb;
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #1e40af;
+}
+
+.signup-text {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;              
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 1rem;
+  gap: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.google-button:hover {
+  background-color: #f0f0f0;
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+}

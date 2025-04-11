@@ -1,0 +1,15 @@
+.dashboard-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 97.5vh;
+    background: linear-gradient(to right, #ce92da, #5695b9);
+}
+
+.dashboard-title {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: white;
+  }
