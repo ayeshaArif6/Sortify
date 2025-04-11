@@ -14,24 +14,37 @@ const UploadPage = () => {
   };
 
   const handleUpload = async () => {
-    if (!image) return;
+    if (!image || !user) return;
     setUploading(true);
-
-    const storageRef = ref(storage, `images/${user.uid}/${Date.now()}_${image.name}`);
-    await uploadBytes(storageRef, image);
-    const url = await getDownloadURL(storageRef);
-
-    await addDoc(collection(db, "images"), {
-      url,
-      name: image.name,
-      userId: user.uid,
-      createdAt: new Date()
-    });
-
-    setImage(null);
-    setUploading(false);
-    alert("Upload successful!");
+  
+    try {
+      console.log("👤 Uploading as:", user.uid);
+      const storageRef = ref(storage, `images/${user.uid}/${Date.now()}_${image.name}`);
+      await uploadBytes(storageRef, image);
+      console.log("✅ Uploaded to Storage");
+  
+      const downloadURL = await getDownloadURL(storageRef);
+      console.log("🔗 Got download URL:", downloadURL);
+  
+      await addDoc(collection(db, "images"), {
+        url: downloadURL,
+        name: image.name,
+        userId: user.uid,
+        createdAt: new Date(),
+      });
+  
+      console.log("📝 Saved metadata to Firestore");
+      alert("Upload successful!");
+      setImage(null);
+    } catch (error) {
+      console.error("❌ Upload error:", error.message);
+      alert("Upload failed: " + error.message);
+    } finally {
+      setUploading(false);
+    }
   };
+  
+  
 
   return (
     <div style={{ padding: "2rem" }}>

@@ -4,6 +4,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./components/PrivateRoute"; 
 import UploadPage from "./pages/UploadPage";
+import GalleryPage from "./pages/GalleryPage";
 
 function App() {
   return (
@@ -23,6 +24,14 @@ function App() {
   element={
     <PrivateRoute>
       <UploadPage />
+    </PrivateRoute>
+  }
+      />
+      <Route
+  path="/gallery"
+  element={
+    <PrivateRoute>
+      <GalleryPage />
     </PrivateRoute>
   }
 />
