@@ -21,12 +21,12 @@ const GalleryPage = () => {
         );
   
         const snapshot = await getDocs(q);
-        console.log("📦 Firestore results:", snapshot.docs);
+        console.log("Firestore results:", snapshot.docs);
   
         const imageList = snapshot.docs.map(doc => doc.data());
         setImages(imageList);
       } catch (error) {
-        console.error("❌ Error loading images:", error.message);
+        console.error(" Error loading images:", error.message);
       } finally {
         setLoading(false);
       }

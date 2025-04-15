@@ -15,29 +15,38 @@ const UploadPage = () => {
 
   const handleUpload = async () => {
     if (!image || !user) return;
+  
     setUploading(true);
   
     try {
-      console.log("👤 Uploading as:", user.uid);
+      // Upload to Firebase Storage
       const storageRef = ref(storage, `images/${user.uid}/${Date.now()}_${image.name}`);
       await uploadBytes(storageRef, image);
-      console.log("✅ Uploaded to Storage");
-  
       const downloadURL = await getDownloadURL(storageRef);
-      console.log("🔗 Got download URL:", downloadURL);
   
+      // 🔍 Call your AI server
+      const response = await fetch("http://localhost:5000/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ imageUrl: downloadURL }),
+      });
+  
+      const result = await response.json();
+      const tags = result.labels || [];
+  
+      // 🔥 Save to Firestore
       await addDoc(collection(db, "images"), {
-        url: downloadURL,
-        name: image.name,
         userId: user.uid,
+        name: image.name,
+        url: downloadURL,
+        tags: tags,
         createdAt: new Date(),
       });
   
-      console.log("📝 Saved metadata to Firestore");
-      alert("Upload successful!");
+      alert("Uploaded and tagged successfully!");
       setImage(null);
     } catch (error) {
-      console.error("❌ Upload error:", error.message);
+      console.error("❌ Upload error:", error);
       alert("Upload failed: " + error.message);
     } finally {
       setUploading(false);
