@@ -99,7 +99,7 @@ const GalleryPage = () => {
 
   return (
     <div className="gallery-container">
-      <h2 className="gallery-title">Your Uploaded Images</h2>
+      <h2 className="gallery-title">Gallery</h2>
 
       <input
         type="text"

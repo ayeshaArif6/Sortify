@@ -6,8 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "../Dashboard.css";
 
 const Dashboard = () => {
-  const { user } = useAuth(); // current Firebase Auth user
-  console.log("UID:", user?.uid);
+  const { user } = useAuth();
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
 
@@ -25,27 +24,62 @@ const Dashboard = () => {
     fetchUsername();
   }, [user]);
 
+  const options = [
+    {
+      label: "Upload Image",
+      icon: "📤",
+      color: "#ff6384",
+      action: () => navigate("/upload"),
+    },
+    {
+      label: "View Gallery",
+      icon: "🖼️",
+      color: "#36a2eb",
+      action: () => navigate("/gallery"),
+    },
+    {
+      label: "Profile",
+      icon: "👤",
+      color: "#4bc0c0",
+      action: () => navigate("/profile"),
+    },
+    {
+      label: "Settings",
+      icon: "⚙️",
+      color: "#f9a825",
+      action: () => navigate("/settings"),
+    },
+    {
+      label: "Logout",
+      icon: "🚪",
+      color: "#ef5350",
+      action: () => {
+        localStorage.clear();
+        navigate("/");
+        window.location.reload();
+      },
+    },
+  ];
+
   return (
     <div className="dashboard-container">
-      <div className="dashboard-box">
-        <h2 className="dashboard-title">Welcome to Sortify!</h2>
-        <h3 className="dashboard-heading">Your smart gallery awaits!</h3>
+      <h2 className="dashboard-title">Welcome, {username || "User"} 👋</h2>
 
-        <button
-          className="dashboard-btn"
-          onClick={() => navigate("/upload")}
-        >
-           Upload Image
-        </button>
-
-        <button className="dashboard-btn" onClick={() => navigate("/gallery")}>
-   View Gallery
-</button>
-
+      <div className="dashboard-grid">
+        {options.map((opt) => (
+          <div
+            key={opt.label}
+            className="dashboard-card"
+            style={{ backgroundColor: opt.color }}
+            onClick={opt.action}
+          >
+            <div className="dashboard-icon">{opt.icon}</div>
+            <div className="dashboard-label">{opt.label}</div>
+          </div>
+        ))}
       </div>
     </div>
   );
-
 };
 
 export default Dashboard;

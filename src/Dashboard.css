@@ -1,45 +1,64 @@
-.dashboard-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 97.5vh;
-    background: linear-gradient(to right, #ce92da, #5695b9);
+.dashboard-container {
+  padding: 2rem;
+  background: linear-gradient(to bottom right, #f6d8e5, #bcdff5);
+  min-height: 100vh;
+  color: black;
+  text-align: center;
 }
 
 .dashboard-title {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    color: white;
-  }
-
-.dashboard-heading {
-    text-align: center;
-    font-size : 1.2rem;
-    color: white;
-    background-color: black;
-    width: 60;
-
+  font-size: 2.5rem;
+  margin-bottom: 0.3rem;
+  font-weight: bold;
 }
 
-  .dashboard-btn {
-    margin-top: 2rem;
-    margin-right: 1rem;
-    margin-left: 1rem;
-    padding: 1.5rem 1.5rem;
-    background-color: #e9e7e3;
-    color: black;
-    font-size: 1.3rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    width: 150;
-    height: 70;
-    transition: background-color 0.3s ease;
-  }
-  
-  .dashboard-btn:hover {
-    background-color: #c79bc7;
-  }
-  
+.dashboard-subheading {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns per row */
+  gap: 2rem;
+  justify-content: center;
+  max-width: 900px;
+  margin: 2rem auto;
+  margin-top: 5rem;
+}
+
+.dashboard-grid > .dashboard-card:nth-child(n+4) {
+  grid-column: span 1;
+}
+
+.dashboard-grid > .dashboard-card:nth-child(5) {
+  grid-column: 2 / span 1; /* Center the 4th card */
+}
+
+
+.dashboard-card {
+  padding: 1.9rem;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+  width: 180px;
+  height: 100px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-icon {
+  font-size: 2rem;
+  margin-bottom: 0.7rem;
+}
+
+.dashboard-label {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
