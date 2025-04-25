@@ -2,7 +2,7 @@
     padding: 2rem;
     text-align: center;
     min-height: 94vh;
-    background: linear-gradient(to right, #ce92da, #5695b9);
+    background: linear-gradient(to bottom right, #f6d8e5, #bcdff5);
   }
   
   .gallery-grid {
@@ -25,8 +25,8 @@
   }
 
   .gallery-title {
-    color: rgb(80, 44, 11);
-    font-size: 1.8rem;
+    color: rgb(7, 4, 0);
+    font-size: 2.0rem;
     font-weight: bold;
   }
 
