@@ -1,0 +1,74 @@
+.profile-container {
+    max-width: 500px;
+    margin: auto;
+    margin-top: 4rem;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  
+  .profile-container input {
+    margin: 1rem 0;
+    padding: 0.5rem;
+    width: 80%;
+    font-size: 1rem;
+  }
+  .profile-container button {
+    margin: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .profile-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 1rem;
+    border: 3px solid #ccc;
+    background-color: #f0f0f0;
+  }
+  
+  .profile-avatar:hover {
+    opacity: 0.85;
+    cursor: pointer;
+  }
+  
+  
+  .profile-email {
+    color: #666;
+    margin-bottom: 2rem;
+  }
+  
+  .profile-btn {
+    margin: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #0a70e6;
+    color: white;
+    transition: 0.3s ease;
+  }
+  
+  .profile-btn.logout {
+    background: #ff5252;
+  }
+  
+  .profile-btn:hover {
+    opacity: 0.9;
+  }
+  
