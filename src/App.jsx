@@ -4,6 +4,9 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./components/PrivateRoute"; 
 import UploadPage from "./pages/UploadPage";
+import ProfilePage from "./pages/ProfilePage";
+import GalleryPage from "./pages/GalleryPage";
+
 
 function App() {
   return (
@@ -25,9 +28,19 @@ function App() {
       <UploadPage />
     </PrivateRoute>
   }
+      />
+      <Route
+  path="/gallery"
+  element={
+    <PrivateRoute>
+      <GalleryPage />
+    </PrivateRoute>
+  }
 />
+<Route path="/profile" element={<ProfilePage />} />
     </Routes>
   );
 }
 
 export default App;
+
