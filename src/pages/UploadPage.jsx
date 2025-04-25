@@ -3,7 +3,10 @@ import { storage, db } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 import { useAuth } from "../AuthContext";
+<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
+=======
+>>>>>>> a62435ac82d9afd1988be181585e3df6682a378b
 import "../UploadPage.css";
 
 const UploadPage = () => {
@@ -31,8 +34,30 @@ const UploadPage = () => {
 
   const handleUpload = async () => {
     if (!image || !user) return;
+<<<<<<< HEAD
+=======
+  
+>>>>>>> a62435ac82d9afd1988be181585e3df6682a378b
     setUploading(true);
+  
+    try {
+    
+      const storageRef = ref(storage, `images/${user.uid}/${Date.now()}_${image.name}`);
+      await uploadBytes(storageRef, image);
+      const downloadURL = await getDownloadURL(storageRef);
+  
+     
+      const response = await fetch("http://localhost:5000/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ imageUrl: downloadURL }),
+      });
+  
+      const result = await response.json();
+      const tags = result.labels || [];
+  
 
+<<<<<<< HEAD
     const storageRef = ref(storage, `images/${user.uid}/${Date.now()}_${image.name}`);
     const uploadTask = uploadBytesResumable(storageRef, image);
 
@@ -84,9 +109,30 @@ const UploadPage = () => {
         }
       }
     );
+=======
+      await addDoc(collection(db, "images"), {
+        userId: user.uid,
+        name: image.name,
+        url: downloadURL,
+        tags: tags,
+        createdAt: new Date(),
+      });
+  
+      alert("Uploaded and tagged successfully!");
+      setImage(null);
+    } catch (error) {
+      console.error("❌ Upload error:", error);
+      alert("Upload failed: " + error.message);
+    } finally {
+      setUploading(false);
+    }
+>>>>>>> a62435ac82d9afd1988be181585e3df6682a378b
   };
+  
+  
 
   return (
+<<<<<<< HEAD
     <div className="upload-page-container">
       <div className="upload-card">
         <h2 className="upload-title">📤 Upload an Image</h2>
@@ -135,6 +181,15 @@ const UploadPage = () => {
           </button>
         )}
       </div>
+=======
+
+    <div className="upload-container">
+      <h2 className="upload-title">Upload Image</h2>
+      <input type="file" accept="image/*" onChange={handleImageChange} />
+      <button onClick={handleUpload} disabled={!image || uploading}>
+        {uploading ? "Uploading..." : "Upload"}
+      </button>
+>>>>>>> a62435ac82d9afd1988be181585e3df6682a378b
     </div>
   );
 };

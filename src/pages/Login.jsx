@@ -18,6 +18,7 @@ const Login = () => {
       await login(email, password);
       navigate("/dashboard");
     } catch (error) {
+      console.error("Login error:", error.code);
       setError("Failed to login. Check your credentials.");
     }
   };
@@ -28,6 +29,7 @@ const Login = () => {
       navigate("dashboard");
 
     } catch (error){
+      console.error("Login error:", error.code);
       setError("Unable to log in with Google.");
     }
   }

@@ -8,8 +8,38 @@
 
 .dashboard-title {
     text-align: center;
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: bold;
     margin-bottom: 1rem;
     color: white;
   }
+
+.dashboard-heading {
+    text-align: center;
+    font-size : 1.2rem;
+    color: white;
+    background-color: black;
+    width: 60;
+
+}
+
+  .dashboard-btn {
+    margin-top: 2rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    padding: 1.5rem 1.5rem;
+    background-color: #e9e7e3;
+    color: black;
+    font-size: 1.3rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 150;
+    height: 70;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dashboard-btn:hover {
+    background-color: #c79bc7;
+  }
+  
