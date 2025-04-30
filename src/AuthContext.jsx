@@ -1,9 +1,21 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { auth } from "./firebase";
-import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
-import { doc, setDoc, getDoc} from "firebase/firestore";
-import { db } from "./firebase"; // or "../firebase" depending on your folder
-
+import {
+  auth,
+  db
+} from "./firebase";
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+import {
+  doc,
+  setDoc,
+  getDoc
+} from "firebase/firestore";
 
 const AuthContext = createContext();
 
@@ -29,15 +41,13 @@ export const AuthProvider = ({ children }) => {
 
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
-  
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-  
-      
+
       const userDocRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userDocRef);
-  
+
       if (!userSnap.exists()) {
         await setDoc(userDocRef, {
           uid: user.uid,
@@ -46,7 +56,7 @@ export const AuthProvider = ({ children }) => {
           createdAt: new Date()
         });
       }
-  
+
       return user;
     } catch (error) {
       console.error("Google login error:", error.message);
@@ -57,14 +67,14 @@ export const AuthProvider = ({ children }) => {
   const register = async (email, password, username) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-  
+
     await setDoc(doc(db, "users", user.uid), {
       uid: user.uid,
       email: user.email,
       username: username,
       createdAt: new Date()
     });
-  
+
     return userCredential;
   };
 
@@ -73,7 +83,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loginWithGoogle, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ user, login, register, loginWithGoogle, logout }}
+    >
       {!loading && children}
     </AuthContext.Provider>
   );
