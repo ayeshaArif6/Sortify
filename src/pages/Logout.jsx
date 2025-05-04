@@ -11,7 +11,7 @@ const Logout = () => {
       try {
         await logout();
         localStorage.clear(); // optional: clear local storage
-        navigate("/"); // go back to login or landing
+        navigate("/", { replace: true });
       } catch (error) {
         alert("Logout failed: " + error.message);
       }

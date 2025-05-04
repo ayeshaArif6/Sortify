@@ -7,6 +7,8 @@ import {
   doc,
   updateDoc,
   deleteDoc,
+  orderBy,
+  deleteField,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { useAuth } from "../AuthContext";
@@ -21,14 +23,17 @@ const GalleryPage = () => {
   const [newName, setNewName] = useState({});
   const menuRef = useRef(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
 
-  // Fetch user images
   useEffect(() => {
     const fetchImages = async () => {
       if (!user) return;
-
       try {
-        const q = query(collection(db, "images"), where("userId", "==", user.uid));
+        const q = query(
+          collection(db, "images"),
+          where("userId", "==", user.uid),
+          orderBy("createdAt", "desc")
+        );
         const snapshot = await getDocs(q);
         const imageList = snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -41,18 +46,15 @@ const GalleryPage = () => {
         setLoading(false);
       }
     };
-
     fetchImages();
   }, [user]);
 
-  // Click outside dropdown closes menu
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setMenuOpenId(null);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -88,26 +90,59 @@ const GalleryPage = () => {
     }
   };
 
-  // Filter images by matching tag text
-  const filteredImages = searchTerm
-    ? images.filter((img) =>
-        img.tags?.some((tag) =>
-          tag.toLowerCase().includes(searchTerm.toLowerCase())
+  const toggleFavorite = async (imageId) => {
+    const imgRef = doc(db, "images", imageId);
+    const image = images.find((img) => img.id === imageId);
+    const favoritedBy = image.favoritedBy || {};
+  
+    const isFav = favoritedBy[user.uid];
+    const updated = {
+      ...favoritedBy,
+      [user.uid]: !isFav,
+    };
+  
+    try {
+      await updateDoc(imgRef, {
+        favoritedBy: updated,
+      });
+  
+      // ✅ Update local state to reflect immediately
+      setImages((prevImages) =>
+        prevImages.map((img) =>
+          img.id === imageId ? { ...img, favoritedBy: updated } : img
         )
-      )
-    : images;
+      );
+    } catch (err) {
+      console.error("Failed to toggle favorite:", err);
+    }
+  };
+  
+  const filteredImages = images.filter((img) => {
+    const matchesSearch =
+      !searchTerm ||
+      img.tags?.some((tag) =>
+        tag.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    const isFavorite = img.favoritedBy?.[user.uid];
+    return matchesSearch && (!showFavoritesOnly || isFavorite);
+  });
 
   return (
     <div className="gallery-container">
       <h2 className="gallery-title">Gallery</h2>
 
-      <input
-        type="text"
-        placeholder="Search by tag..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="tag-search"
-      />
+      <div className="gallery-controls">
+        <input
+          type="text"
+          placeholder="Search by tag..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="tag-search"
+        />
+        <button onClick={() => setShowFavoritesOnly((prev) => !prev)}>
+          {showFavoritesOnly ? "Show All" : "Show Favorites"}
+        </button>
+      </div>
 
       {loading ? (
         <p>Loading...</p>
@@ -118,38 +153,44 @@ const GalleryPage = () => {
           {filteredImages.map((img) => (
             <div key={img.id} className="gallery-item">
               <img src={img.url} alt={img.name} />
-
+              
               <div className="image-name-bar">
-                <span>{img.name}</span>
-                <button
-                  className="menu-btn"
-                  onClick={() =>
-                    setMenuOpenId(menuOpenId === img.id ? null : img.id)
-                  }
-                >
-                  ⋮
-                </button>
+  <span>{img.name}</span>
+  <div style={{ marginLeft: "auto", display: "flex", gap: "8px", alignItems: "center" }}>
+    <button
+      onClick={() => toggleFavorite(img.id)}
+      style={{ background: "none", border: "none", cursor: "pointer" }}
+    >
+      {img.favoritedBy?.[user.uid] ? "💖" : "🤍"}
+    </button>
 
-                {menuOpenId === img.id && (
-                  <div className="menu-dropdown" ref={menuRef}>
-                    <button
-                      onClick={() => {
-                        setNewName((prev) => ({
-                          ...prev,
-                          [img.id]: img.name,
-                        }));
-                        setEditingId(img.id);
-                        setMenuOpenId(null);
-                      }}
-                    >
-                      ✏️ Rename
-                    </button>
-                    <button onClick={() => handleDelete(img.id)}>
-                      🗑️ Delete
-                    </button>
-                  </div>
-                )}
-              </div>
+    <button
+      className="menu-btn"
+      onClick={() => setMenuOpenId(menuOpenId === img.id ? null : img.id)}
+    >
+      ⋮
+    </button>
+  </div> {/* ✅ Closing the favorites + kebab wrapper div here */}
+
+  {menuOpenId === img.id && (
+    <div className="menu-dropdown" ref={menuRef}>
+      <button
+        onClick={() => {
+          setNewName((prev) => ({
+            ...prev,
+            [img.id]: img.name,
+          }));
+          setEditingId(img.id);
+          setMenuOpenId(null);
+        }}
+      >
+        ✏️ Rename
+      </button>
+      <button onClick={() => handleDelete(img.id)}>🗑️ Delete</button>
+    </div>
+  )}
+</div>
+
 
               {editingId === img.id && (
                 <div className="edit-controls">

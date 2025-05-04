@@ -23,9 +23,7 @@ const Layout = () => {
           <NavLink to="/gallery" title="Gallery">🖼️ {!collapsed && "Gallery"}</NavLink>
           <NavLink to="/profile" title="Profile">👤 {!collapsed && "Profile"}</NavLink>
           <NavLink to="/settings" title="Settings">⚙️ {!collapsed && "Settings"}</NavLink>
-          <NavLink to="/" title="Logout" onClick={() => localStorage.clear()}>
-            🚪 {!collapsed && "Logout"}
-          </NavLink>
+          <NavLink to="/logout" title="Logout">🚪 {!collapsed && "Logout"}</NavLink>
         </nav>
       </aside>
 

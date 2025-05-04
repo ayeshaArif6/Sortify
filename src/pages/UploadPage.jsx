@@ -4,6 +4,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 import { useAuth } from "../AuthContext";
 import "../UploadPage.css";
+import { serverTimestamp } from "firebase/firestore";
 
 const UploadPage = () => {
   const [image, setImage] = useState(null);
@@ -61,7 +62,7 @@ const UploadPage = () => {
             name: image.name,
             url: downloadURL,
             tags: detectedTags,
-            createdAt: new Date(),
+            createdAt: serverTimestamp(),
           });
 
           alert("Uploaded and tagged successfully!");
