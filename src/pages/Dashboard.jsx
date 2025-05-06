@@ -19,7 +19,12 @@ const Dashboard = () => {
         const userDoc = await getDoc(doc(db, "users", user.uid));
         if (userDoc.exists()) setUsername(userDoc.data().username);
 
-        const q = query(collection(db, "images"), where("userId", "==", user.uid));
+        const q = query(
+          collection(db, "images"),
+          where("userId", "==", user.uid),
+          where("deleted", "==", false)
+        );
+        
         const snapshot = await getDocs(q);
         const imgData = snapshot.docs.map(doc => doc.data());
         setImages(imgData);

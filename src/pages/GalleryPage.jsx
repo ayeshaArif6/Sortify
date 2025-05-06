@@ -13,6 +13,9 @@ import {
 import { db } from "../firebase";
 import { useAuth } from "../AuthContext";
 import "../Gallery.css";
+import { deleteObject, ref as storageRef } from "firebase/storage"; // Add this
+import { storage } from "../firebase"; // Make sure storage is imported
+
 
 const GalleryPage = () => {
   const { user } = useAuth();
@@ -32,6 +35,7 @@ const GalleryPage = () => {
         const q = query(
           collection(db, "images"),
           where("userId", "==", user.uid),
+          where("deleted", "==", false), // ✅ only show non-deleted
           orderBy("createdAt", "desc")
         );
         const snapshot = await getDocs(q);
@@ -83,12 +87,18 @@ const GalleryPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      await deleteDoc(doc(db, "images", id));
+      await updateDoc(doc(db, "images", id), {
+        deleted: true
+      });
+  
+      // ✅ Remove from UI immediately
       setImages((prev) => prev.filter((img) => img.id !== id));
     } catch (error) {
-      console.error("Error deleting image:", error);
+      console.error("Failed to soft delete image:", error.message);
+      alert("Failed to delete image. See console for details.");
     }
   };
+  
 
   const toggleFavorite = async (imageId) => {
     const imgRef = doc(db, "images", imageId);
