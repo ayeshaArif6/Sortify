@@ -1,4 +1,4 @@
-# <img src="./public/dark_logo.png" alt="Sortify" width="35">  Sortify
+# <img src="./public/dark_logo.png" alt="Sortify" width="25">  Sortify
 Sortify is a full-stack image management application that lets users upload, organize, and intelligently tag images using Google Cloud Vision AI. Designed with usability and aesthetics in mind, Sortify helps users store, search, and favorite images in a personalized gallery dashboard — with optional dark mode and upload streaks to boost motivation.
 
 
