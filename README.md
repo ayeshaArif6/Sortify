@@ -3,20 +3,20 @@ Sortify is a full-stack image management application that lets users upload, org
 
 
 
-## 🔍 Features
+##  Features
 
 
 ```bash
-📤 Image Upload with real-time progress
-🧠 AI-Powered Tagging via Google Vision API
-🔍 Tag-Based Search for fast filtering
-❤️ Favorites System with toggle & filter
-🕶️ Dark Mode Toggle for visual comfort
-🗂️ Recent Uploads & Analytics on Dashboard
-🗑️ Soft Delete (Firestore-flag based)
-🎯 Upload Streak Tracking and motivational prompts
-🖱️ Drag & Drop Uploads
-🔒 Firebase Auth Integration with Google Login
+ Image Upload with real-time progress
+ AI-Powered Tagging via Google Vision API
+ Tag-Based Search for fast filtering
+ Favorites System with toggle & filter
+ Dark Mode Toggle for visual comfort
+ Recent Uploads & Analytics on Dashboard
+ Soft Delete (Firestore-flag based)
+ Upload Streak Tracking and motivational prompts
+ Drag & Drop Uploads
+ Firebase Auth Integration with Google Login
 ```
 
 
